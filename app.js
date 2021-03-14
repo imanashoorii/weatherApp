@@ -1,11 +1,15 @@
 const { date } = require("assert-plus");
 const request = require("request");
 const express = require("express")
+const path = require('path')
 const app = express()
 
 const CITY = 'Tehran';
 const url = `http://api.weatherstack.com/current?access_key=de360a5e271b7cfd6795f6f4a06e80b7&query=${CITY}`;
 
+const publicDirectoryPath = path.join(__dirname, ("./public"))
+
+app.use(express.static(publicDirectoryPath))
 
 app.get("", (req, res) => {
     request({url: url, json:true}, (err, response) => {
@@ -25,6 +29,5 @@ app.get('/about', (req, res) => {
 app.get('/help', (req, res) => {
     res.send("Help Page");
 });
-
 
 module.exports = app;
